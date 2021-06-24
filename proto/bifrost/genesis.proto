@@ -1,0 +1,12 @@
+syntax = "proto3";
+package sap200.bifrost.bifrost;
+
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "github.com/sap200/bifrost/x/bifrost/types";
+
+// GenesisState defines the bifrost module's genesis state.
+message GenesisState {
+    // this line is used by starport scaffolding # genesis/proto/state
+    // this line is used by starport scaffolding # ibc/genesis/proto
+}
