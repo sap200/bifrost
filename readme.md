@@ -6,7 +6,13 @@
 
 **bifrost** is a blockchain built using Cosmos SDK and Tendermint and created with [Starport](https://github.com/tendermint/starport).
 
-## Get started
+## Installation
+
+```
+$ git clone github.com/sap200/bifrost
+
+$ cd bifrost
+```
 
 ```
 starport serve
