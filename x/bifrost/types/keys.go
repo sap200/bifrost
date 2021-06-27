@@ -24,3 +24,28 @@ const (
 func KeyPrefix(p string) []byte {
 	return []byte(p)
 }
+
+const (
+	ReceivedTxsKey      = "ReceivedTxs-value-"
+	ReceivedTxsCountKey = "ReceivedTxs-count-"
+)
+
+const (
+	SendToTezosKey      = "SendToTezos-value-"
+	SendToTezosCountKey = "SendToTezos-count-"
+)
+
+const (
+	ReceivedFa12TxsKey      = "ReceivedFa12Txs-value-"
+	ReceivedFa12TxsCountKey = "ReceivedFa12Txs-count-"
+)
+
+// Bifrost transaction ports
+const BiVerAddr = "localhost:7009"
+const BiOpAddr = "localhost:7010"
+const Msg_Mint = "Mint"
+const Msg_Unlock = "Unlock"
+const (
+	SendToTezosSignedKey      = "SendToTezosSigned-value-"
+	SendToTezosSignedCountKey = "SendToTezosSigned-count-"
+)

@@ -1,0 +1,21 @@
+syntax = "proto3";
+package sap200.bifrost.bifrost;
+
+option go_package = "github.com/sap200/bifrost/x/bifrost/types";
+
+import "gogoproto/gogo.proto";
+
+message ReceivedTxs {
+  string creator = 1;
+  uint64 id = 2;
+  string txid = 3; 
+  string tezosSender = 4; 
+  string cosmosReceiver = 5; 
+  string amount = 6; 
+  string denom = 7; 
+  string srcChain = 8; 
+  string destChain = 9; 
+  string txStatus = 10; 
+  string timestamp = 11; 
+  string relayTimestamp = 12; 
+}

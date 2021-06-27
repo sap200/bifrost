@@ -2,12 +2,173 @@ syntax = "proto3";
 package sap200.bifrost.bifrost;
 
 // this line is used by starport scaffolding # proto/tx/import
+import "bifrost/sendToTezosSigned.proto";
+import "bifrost/receivedFa12Txs.proto";
+import "bifrost/sendToTezos.proto";
+import "bifrost/receivedTxs.proto";
 
 option go_package = "github.com/sap200/bifrost/x/bifrost/types";
 
 // Msg defines the Msg service.
 service Msg {
     // this line is used by starport scaffolding # proto/tx/rpc
+  rpc CreateSendToTezosSigned(MsgCreateSendToTezosSigned) returns (MsgCreateSendToTezosSignedResponse);
+  rpc UpdateSendToTezosSigned(MsgUpdateSendToTezosSigned) returns (MsgUpdateSendToTezosSignedResponse);
+  rpc DeleteSendToTezosSigned(MsgDeleteSendToTezosSigned) returns (MsgDeleteSendToTezosSignedResponse);
+  rpc CreateReceivedFa12Txs(MsgCreateReceivedFa12Txs) returns (MsgCreateReceivedFa12TxsResponse);
+  rpc UpdateReceivedFa12Txs(MsgUpdateReceivedFa12Txs) returns (MsgUpdateReceivedFa12TxsResponse);
+  rpc DeleteReceivedFa12Txs(MsgDeleteReceivedFa12Txs) returns (MsgDeleteReceivedFa12TxsResponse);
+  rpc CreateSendToTezos(MsgCreateSendToTezos) returns (MsgCreateSendToTezosResponse);
+  rpc UpdateSendToTezos(MsgUpdateSendToTezos) returns (MsgUpdateSendToTezosResponse);
+  rpc DeleteSendToTezos(MsgDeleteSendToTezos) returns (MsgDeleteSendToTezosResponse);
+  rpc CreateReceivedTxs(MsgCreateReceivedTxs) returns (MsgCreateReceivedTxsResponse);
+  rpc UpdateReceivedTxs(MsgUpdateReceivedTxs) returns (MsgUpdateReceivedTxsResponse);
+  rpc DeleteReceivedTxs(MsgDeleteReceivedTxs) returns (MsgDeleteReceivedTxsResponse);
 }
 
 // this line is used by starport scaffolding # proto/tx/message
+message MsgCreateSendToTezosSigned {
+  string creator = 1;
+  string tezosReceiver = 2;
+  string amount = 3;
+  string denom = 4;
+  string tezosSignerPrivateKey = 5;
+}
+
+message MsgCreateSendToTezosSignedResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateSendToTezosSigned {
+  string creator = 1;
+  uint64 id = 2;
+  string tezosReceiver = 3;
+  string amount = 4;
+  string denom = 5;
+  string tezosSignerPrivateKey = 6;
+}
+
+message MsgUpdateSendToTezosSignedResponse { }
+
+message MsgDeleteSendToTezosSigned {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteSendToTezosSignedResponse { }
+
+message MsgCreateReceivedFa12Txs {
+  string creator = 1;
+  string txid = 2;
+  string tezosSender = 3;
+  string denom = 4;
+  string cosmosReceiver = 5;
+  string amount = 6;
+  string srcChain = 7;
+  string destChain = 8;
+  string txStatus = 9;
+  string isApproval = 10;
+  string approver = 11;
+  string timestamp = 12;
+  string relayTimestamp = 13;
+}
+
+message MsgCreateReceivedFa12TxsResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateReceivedFa12Txs {
+  string creator = 1;
+  uint64 id = 2;
+  string txid = 3;
+  string tezosSender = 4;
+  string denom = 5;
+  string cosmosReceiver = 6;
+  string amount = 7;
+  string srcChain = 8;
+  string destChain = 9;
+  string txStatus = 10;
+  string isApproval = 11;
+  string approver = 12;
+  string timestamp = 13;
+  string relayTimestamp = 14;
+}
+
+message MsgUpdateReceivedFa12TxsResponse { }
+
+message MsgDeleteReceivedFa12Txs {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteReceivedFa12TxsResponse { }
+
+message MsgCreateSendToTezos {
+  string creator = 1;
+  string tezosReceiver = 2;
+  string amount = 3;
+  string denom = 4;
+}
+
+message MsgCreateSendToTezosResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateSendToTezos {
+  string creator = 1;
+  uint64 id = 2;
+  string tezosReceiver = 3;
+  string amount = 4;
+  string denom = 5;
+}
+
+message MsgUpdateSendToTezosResponse { }
+
+message MsgDeleteSendToTezos {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteSendToTezosResponse { }
+
+message MsgCreateReceivedTxs {
+  string creator = 1;
+  string txid = 2;
+  string tezosSender = 3;
+  string cosmosReceiver = 4;
+  string amount = 5;
+  string denom = 6;
+  string srcChain = 7;
+  string destChain = 8;
+  string txStatus = 9;
+  string timestamp = 10;
+  string relayTimestamp = 11;
+}
+
+message MsgCreateReceivedTxsResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateReceivedTxs {
+  string creator = 1;
+  uint64 id = 2;
+  string txid = 3;
+  string tezosSender = 4;
+  string cosmosReceiver = 5;
+  string amount = 6;
+  string denom = 7;
+  string srcChain = 8;
+  string destChain = 9;
+  string txStatus = 10;
+  string timestamp = 11;
+  string relayTimestamp = 12;
+}
+
+message MsgUpdateReceivedTxsResponse { }
+
+message MsgDeleteReceivedTxs {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteReceivedTxsResponse { }

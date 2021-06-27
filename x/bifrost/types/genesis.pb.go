@@ -24,6 +24,15 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // GenesisState defines the bifrost module's genesis state.
 type GenesisState struct {
+	// this line is used by starport scaffolding # genesis/proto/state
+	SendToTezosSignedList  []*SendToTezosSigned `protobuf:"bytes,7,rep,name=sendToTezosSignedList,proto3" json:"sendToTezosSignedList,omitempty"`
+	SendToTezosSignedCount uint64               `protobuf:"varint,8,opt,name=sendToTezosSignedCount,proto3" json:"sendToTezosSignedCount,omitempty"`
+	ReceivedFa12TxsList    []*ReceivedFa12Txs   `protobuf:"bytes,5,rep,name=receivedFa12TxsList,proto3" json:"receivedFa12TxsList,omitempty"`
+	ReceivedFa12TxsCount   uint64               `protobuf:"varint,6,opt,name=receivedFa12TxsCount,proto3" json:"receivedFa12TxsCount,omitempty"`
+	SendToTezosList        []*SendToTezos       `protobuf:"bytes,3,rep,name=sendToTezosList,proto3" json:"sendToTezosList,omitempty"`
+	SendToTezosCount       uint64               `protobuf:"varint,4,opt,name=sendToTezosCount,proto3" json:"sendToTezosCount,omitempty"`
+	ReceivedTxsList        []*ReceivedTxs       `protobuf:"bytes,1,rep,name=receivedTxsList,proto3" json:"receivedTxsList,omitempty"`
+	ReceivedTxsCount       uint64               `protobuf:"varint,2,opt,name=receivedTxsCount,proto3" json:"receivedTxsCount,omitempty"`
 }
 
 func (m *GenesisState) Reset()         { *m = GenesisState{} }
@@ -59,6 +68,62 @@ func (m *GenesisState) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GenesisState proto.InternalMessageInfo
 
+func (m *GenesisState) GetSendToTezosSignedList() []*SendToTezosSigned {
+	if m != nil {
+		return m.SendToTezosSignedList
+	}
+	return nil
+}
+
+func (m *GenesisState) GetSendToTezosSignedCount() uint64 {
+	if m != nil {
+		return m.SendToTezosSignedCount
+	}
+	return 0
+}
+
+func (m *GenesisState) GetReceivedFa12TxsList() []*ReceivedFa12Txs {
+	if m != nil {
+		return m.ReceivedFa12TxsList
+	}
+	return nil
+}
+
+func (m *GenesisState) GetReceivedFa12TxsCount() uint64 {
+	if m != nil {
+		return m.ReceivedFa12TxsCount
+	}
+	return 0
+}
+
+func (m *GenesisState) GetSendToTezosList() []*SendToTezos {
+	if m != nil {
+		return m.SendToTezosList
+	}
+	return nil
+}
+
+func (m *GenesisState) GetSendToTezosCount() uint64 {
+	if m != nil {
+		return m.SendToTezosCount
+	}
+	return 0
+}
+
+func (m *GenesisState) GetReceivedTxsList() []*ReceivedTxs {
+	if m != nil {
+		return m.ReceivedTxsList
+	}
+	return nil
+}
+
+func (m *GenesisState) GetReceivedTxsCount() uint64 {
+	if m != nil {
+		return m.ReceivedTxsCount
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterType((*GenesisState)(nil), "sap200.bifrost.bifrost.GenesisState")
 }
@@ -66,16 +131,28 @@ func init() {
 func init() { proto.RegisterFile("bifrost/genesis.proto", fileDescriptor_996c62696eb6c9f6) }
 
 var fileDescriptor_996c62696eb6c9f6 = []byte{
-	// 130 bytes of a gzipped FileDescriptorProto
+	// 330 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x4d, 0xca, 0x4c, 0x2b,
 	0xca, 0x2f, 0x2e, 0xd1, 0x4f, 0x4f, 0xcd, 0x4b, 0x2d, 0xce, 0x2c, 0xd6, 0x2b, 0x28, 0xca, 0x2f,
-	0xc9, 0x17, 0x12, 0x2b, 0x4e, 0x2c, 0x30, 0x32, 0x30, 0xd0, 0x83, 0xca, 0xc2, 0x68, 0x25, 0x3e,
-	0x2e, 0x1e, 0x77, 0x88, 0xc2, 0xe0, 0x92, 0xc4, 0x92, 0x54, 0x27, 0xe7, 0x13, 0x8f, 0xe4, 0x18,
-	0x2f, 0x3c, 0x92, 0x63, 0x7c, 0xf0, 0x48, 0x8e, 0x71, 0xc2, 0x63, 0x39, 0x86, 0x0b, 0x8f, 0xe5,
-	0x18, 0x6e, 0x3c, 0x96, 0x63, 0x88, 0xd2, 0x4c, 0xcf, 0x2c, 0xc9, 0x28, 0x4d, 0xd2, 0x4b, 0xce,
-	0xcf, 0xd5, 0x87, 0x18, 0xa6, 0x0f, 0xb3, 0xaa, 0x02, 0xce, 0x2a, 0xa9, 0x2c, 0x48, 0x2d, 0x4e,
-	0x62, 0x03, 0xdb, 0x69, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0xec, 0x81, 0xc2, 0x3d, 0x8c, 0x00,
-	0x00, 0x00,
+	0xc9, 0x17, 0x12, 0x2b, 0x4e, 0x2c, 0x30, 0x32, 0x30, 0xd0, 0x83, 0xca, 0xc2, 0x68, 0x29, 0x79,
+	0x98, 0xf2, 0xe2, 0xd4, 0xbc, 0x94, 0x90, 0xfc, 0x90, 0xd4, 0xaa, 0xfc, 0xe2, 0xe0, 0xcc, 0xf4,
+	0xbc, 0xd4, 0x14, 0x88, 0x46, 0x29, 0x59, 0x98, 0x82, 0xa2, 0xd4, 0xe4, 0xd4, 0xcc, 0xb2, 0xd4,
+	0x14, 0xb7, 0x44, 0x43, 0xa3, 0x90, 0x0a, 0xa8, 0xb9, 0x52, 0x92, 0x58, 0xf4, 0xa3, 0x4b, 0xc1,
+	0x74, 0xc2, 0x75, 0x29, 0xad, 0x61, 0xe1, 0xe2, 0x71, 0x87, 0xb8, 0x2f, 0xb8, 0x24, 0xb1, 0x24,
+	0x55, 0x28, 0x9e, 0x4b, 0x14, 0xc3, 0x01, 0x3e, 0x99, 0xc5, 0x25, 0x12, 0xec, 0x0a, 0xcc, 0x1a,
+	0xdc, 0x46, 0x9a, 0x7a, 0xd8, 0x9d, 0xaf, 0x17, 0x8c, 0xae, 0x29, 0x08, 0xbb, 0x39, 0x42, 0x66,
+	0x5c, 0x62, 0x18, 0x12, 0xce, 0xf9, 0xa5, 0x79, 0x25, 0x12, 0x1c, 0x0a, 0x8c, 0x1a, 0x2c, 0x41,
+	0x38, 0x64, 0x85, 0x22, 0xb9, 0x84, 0xd1, 0x3c, 0x0e, 0x76, 0x16, 0x2b, 0xd8, 0x59, 0xea, 0xb8,
+	0x9c, 0x15, 0x84, 0xaa, 0x25, 0x08, 0x9b, 0x19, 0x42, 0x46, 0x5c, 0x22, 0x68, 0xc2, 0x10, 0x07,
+	0xb1, 0x81, 0x1d, 0x84, 0x55, 0x4e, 0xc8, 0x97, 0x8b, 0x1f, 0xc9, 0xa1, 0x60, 0xa7, 0x30, 0x83,
+	0x9d, 0xa2, 0x4c, 0x44, 0x08, 0x05, 0xa1, 0xeb, 0x15, 0xd2, 0xe2, 0x12, 0x40, 0x12, 0x82, 0x58,
+	0xcf, 0x02, 0xb6, 0x1e, 0x43, 0x1c, 0x64, 0x35, 0x52, 0x44, 0x82, 0xad, 0x66, 0xc4, 0x6f, 0x75,
+	0x10, 0x42, 0x79, 0x10, 0xba, 0x5e, 0x90, 0xd5, 0x48, 0x42, 0x10, 0xab, 0x99, 0x20, 0x56, 0xa3,
+	0x8b, 0x3b, 0x39, 0x9f, 0x78, 0x24, 0xc7, 0x78, 0xe1, 0x91, 0x1c, 0xe3, 0x83, 0x47, 0x72, 0x8c,
+	0x13, 0x1e, 0xcb, 0x31, 0x5c, 0x78, 0x2c, 0xc7, 0x70, 0xe3, 0xb1, 0x1c, 0x43, 0x94, 0x66, 0x7a,
+	0x66, 0x49, 0x46, 0x69, 0x92, 0x5e, 0x72, 0x7e, 0xae, 0x3e, 0xc4, 0x15, 0xfa, 0xb0, 0x54, 0x57,
+	0x01, 0x67, 0x95, 0x54, 0x16, 0xa4, 0x16, 0x27, 0xb1, 0x81, 0x93, 0x9e, 0x31, 0x20, 0x00, 0x00,
+	0xff, 0xff, 0x1f, 0x73, 0x02, 0x5e, 0x21, 0x03, 0x00, 0x00,
 }
 
 func (m *GenesisState) Marshal() (dAtA []byte, err error) {
@@ -98,6 +175,82 @@ func (m *GenesisState) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.SendToTezosSignedCount != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.SendToTezosSignedCount))
+		i--
+		dAtA[i] = 0x40
+	}
+	if len(m.SendToTezosSignedList) > 0 {
+		for iNdEx := len(m.SendToTezosSignedList) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.SendToTezosSignedList[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintGenesis(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x3a
+		}
+	}
+	if m.ReceivedFa12TxsCount != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.ReceivedFa12TxsCount))
+		i--
+		dAtA[i] = 0x30
+	}
+	if len(m.ReceivedFa12TxsList) > 0 {
+		for iNdEx := len(m.ReceivedFa12TxsList) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.ReceivedFa12TxsList[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintGenesis(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x2a
+		}
+	}
+	if m.SendToTezosCount != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.SendToTezosCount))
+		i--
+		dAtA[i] = 0x20
+	}
+	if len(m.SendToTezosList) > 0 {
+		for iNdEx := len(m.SendToTezosList) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.SendToTezosList[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintGenesis(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if m.ReceivedTxsCount != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.ReceivedTxsCount))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.ReceivedTxsList) > 0 {
+		for iNdEx := len(m.ReceivedTxsList) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.ReceivedTxsList[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintGenesis(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -118,6 +271,42 @@ func (m *GenesisState) Size() (n int) {
 	}
 	var l int
 	_ = l
+	if len(m.ReceivedTxsList) > 0 {
+		for _, e := range m.ReceivedTxsList {
+			l = e.Size()
+			n += 1 + l + sovGenesis(uint64(l))
+		}
+	}
+	if m.ReceivedTxsCount != 0 {
+		n += 1 + sovGenesis(uint64(m.ReceivedTxsCount))
+	}
+	if len(m.SendToTezosList) > 0 {
+		for _, e := range m.SendToTezosList {
+			l = e.Size()
+			n += 1 + l + sovGenesis(uint64(l))
+		}
+	}
+	if m.SendToTezosCount != 0 {
+		n += 1 + sovGenesis(uint64(m.SendToTezosCount))
+	}
+	if len(m.ReceivedFa12TxsList) > 0 {
+		for _, e := range m.ReceivedFa12TxsList {
+			l = e.Size()
+			n += 1 + l + sovGenesis(uint64(l))
+		}
+	}
+	if m.ReceivedFa12TxsCount != 0 {
+		n += 1 + sovGenesis(uint64(m.ReceivedFa12TxsCount))
+	}
+	if len(m.SendToTezosSignedList) > 0 {
+		for _, e := range m.SendToTezosSignedList {
+			l = e.Size()
+			n += 1 + l + sovGenesis(uint64(l))
+		}
+	}
+	if m.SendToTezosSignedCount != 0 {
+		n += 1 + sovGenesis(uint64(m.SendToTezosSignedCount))
+	}
 	return n
 }
 
@@ -156,6 +345,218 @@ func (m *GenesisState) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: GenesisState: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReceivedTxsList", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ReceivedTxsList = append(m.ReceivedTxsList, &ReceivedTxs{})
+			if err := m.ReceivedTxsList[len(m.ReceivedTxsList)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReceivedTxsCount", wireType)
+			}
+			m.ReceivedTxsCount = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ReceivedTxsCount |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SendToTezosList", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SendToTezosList = append(m.SendToTezosList, &SendToTezos{})
+			if err := m.SendToTezosList[len(m.SendToTezosList)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SendToTezosCount", wireType)
+			}
+			m.SendToTezosCount = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SendToTezosCount |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReceivedFa12TxsList", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ReceivedFa12TxsList = append(m.ReceivedFa12TxsList, &ReceivedFa12Txs{})
+			if err := m.ReceivedFa12TxsList[len(m.ReceivedFa12TxsList)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReceivedFa12TxsCount", wireType)
+			}
+			m.ReceivedFa12TxsCount = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ReceivedFa12TxsCount |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SendToTezosSignedList", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SendToTezosSignedList = append(m.SendToTezosSignedList, &SendToTezosSigned{})
+			if err := m.SendToTezosSignedList[len(m.SendToTezosSignedList)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 8:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SendToTezosSignedCount", wireType)
+			}
+			m.SendToTezosSignedCount = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SendToTezosSignedCount |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenesis(dAtA[iNdEx:])

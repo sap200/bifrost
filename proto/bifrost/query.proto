@@ -4,12 +4,124 @@ package sap200.bifrost.bifrost;
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 // this line is used by starport scaffolding # 1
+import "bifrost/sendToTezosSigned.proto";
+import "bifrost/receivedFa12Txs.proto";
+import "bifrost/sendToTezos.proto";
+import "bifrost/receivedTxs.proto";
 
 option go_package = "github.com/sap200/bifrost/x/bifrost/types";
 
 // Query defines the gRPC querier service.
 service Query {
     // this line is used by starport scaffolding # 2
+
+	// Queries a sendToTezosSigned by id.
+	rpc SendToTezosSigned(QueryGetSendToTezosSignedRequest) returns (QueryGetSendToTezosSignedResponse) {
+		option (google.api.http).get = "/sap200/bifrost/bifrost/sendToTezosSigned/{id}";
+	}
+
+	// Queries a list of sendToTezosSigned items.
+	rpc SendToTezosSignedAll(QueryAllSendToTezosSignedRequest) returns (QueryAllSendToTezosSignedResponse) {
+		option (google.api.http).get = "/sap200/bifrost/bifrost/sendToTezosSigned";
+	}
+
+
+	// Queries a receivedFa12Txs by id.
+	rpc ReceivedFa12Txs(QueryGetReceivedFa12TxsRequest) returns (QueryGetReceivedFa12TxsResponse) {
+		option (google.api.http).get = "/sap200/bifrost/bifrost/receivedFa12Txs/{id}";
+	}
+
+	// Queries a list of receivedFa12Txs items.
+	rpc ReceivedFa12TxsAll(QueryAllReceivedFa12TxsRequest) returns (QueryAllReceivedFa12TxsResponse) {
+		option (google.api.http).get = "/sap200/bifrost/bifrost/receivedFa12Txs";
+	}
+
+
+	// Queries a sendToTezos by id.
+	rpc SendToTezos(QueryGetSendToTezosRequest) returns (QueryGetSendToTezosResponse) {
+		option (google.api.http).get = "/sap200/bifrost/bifrost/sendToTezos/{id}";
+	}
+
+	// Queries a list of sendToTezos items.
+	rpc SendToTezosAll(QueryAllSendToTezosRequest) returns (QueryAllSendToTezosResponse) {
+		option (google.api.http).get = "/sap200/bifrost/bifrost/sendToTezos";
+	}
+
+
+	// Queries a receivedTxs by id.
+	rpc ReceivedTxs(QueryGetReceivedTxsRequest) returns (QueryGetReceivedTxsResponse) {
+		option (google.api.http).get = "/sap200/bifrost/bifrost/receivedTxs/{id}";
+	}
+
+	// Queries a list of receivedTxs items.
+	rpc ReceivedTxsAll(QueryAllReceivedTxsRequest) returns (QueryAllReceivedTxsResponse) {
+		option (google.api.http).get = "/sap200/bifrost/bifrost/receivedTxs";
+	}
+
 }
 
 // this line is used by starport scaffolding # 3
+message QueryGetSendToTezosSignedRequest {
+	uint64 id = 1;
+}
+
+message QueryGetSendToTezosSignedResponse {
+	SendToTezosSigned SendToTezosSigned = 1;
+}
+
+message QueryAllSendToTezosSignedRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllSendToTezosSignedResponse {
+	repeated SendToTezosSigned SendToTezosSigned = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+message QueryGetReceivedFa12TxsRequest {
+	uint64 id = 1;
+}
+
+message QueryGetReceivedFa12TxsResponse {
+	ReceivedFa12Txs ReceivedFa12Txs = 1;
+}
+
+message QueryAllReceivedFa12TxsRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllReceivedFa12TxsResponse {
+	repeated ReceivedFa12Txs ReceivedFa12Txs = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+message QueryGetSendToTezosRequest {
+	uint64 id = 1;
+}
+
+message QueryGetSendToTezosResponse {
+	SendToTezos SendToTezos = 1;
+}
+
+message QueryAllSendToTezosRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllSendToTezosResponse {
+	repeated SendToTezos SendToTezos = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+message QueryGetReceivedTxsRequest {
+	uint64 id = 1;
+}
+
+message QueryGetReceivedTxsResponse {
+	ReceivedTxs ReceivedTxs = 1;
+}
+
+message QueryAllReceivedTxsRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllReceivedTxsResponse {
+	repeated ReceivedTxs ReceivedTxs = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}

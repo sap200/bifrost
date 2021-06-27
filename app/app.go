@@ -146,6 +146,7 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
+		bifrosttypes.ModuleName:        {authtypes.Minter, authtypes.Burner},
 	}
 )
 
@@ -329,6 +330,7 @@ func New(
 		appCodec,
 		keys[bifrosttypes.StoreKey],
 		keys[bifrosttypes.MemStoreKey],
+		app.BankKeeper,
 	)
 	bifrostModule := bifrost.NewAppModule(appCodec, app.BifrostKeeper)
 

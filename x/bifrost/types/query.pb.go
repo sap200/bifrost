@@ -6,12 +6,16 @@ package types
 import (
 	context "context"
 	fmt "fmt"
-	_ "github.com/cosmos/cosmos-sdk/types/query"
+	query "github.com/cosmos/cosmos-sdk/types/query"
 	grpc1 "github.com/gogo/protobuf/grpc"
 	proto "github.com/gogo/protobuf/proto"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
+	io "io"
 	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -25,22 +29,812 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+// this line is used by starport scaffolding # 3
+type QueryGetSendToTezosSignedRequest struct {
+	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (m *QueryGetSendToTezosSignedRequest) Reset()         { *m = QueryGetSendToTezosSignedRequest{} }
+func (m *QueryGetSendToTezosSignedRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryGetSendToTezosSignedRequest) ProtoMessage()    {}
+func (*QueryGetSendToTezosSignedRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{0}
+}
+func (m *QueryGetSendToTezosSignedRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetSendToTezosSignedRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetSendToTezosSignedRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetSendToTezosSignedRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetSendToTezosSignedRequest.Merge(m, src)
+}
+func (m *QueryGetSendToTezosSignedRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetSendToTezosSignedRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetSendToTezosSignedRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetSendToTezosSignedRequest proto.InternalMessageInfo
+
+func (m *QueryGetSendToTezosSignedRequest) GetId() uint64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+type QueryGetSendToTezosSignedResponse struct {
+	SendToTezosSigned *SendToTezosSigned `protobuf:"bytes,1,opt,name=SendToTezosSigned,proto3" json:"SendToTezosSigned,omitempty"`
+}
+
+func (m *QueryGetSendToTezosSignedResponse) Reset()         { *m = QueryGetSendToTezosSignedResponse{} }
+func (m *QueryGetSendToTezosSignedResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryGetSendToTezosSignedResponse) ProtoMessage()    {}
+func (*QueryGetSendToTezosSignedResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{1}
+}
+func (m *QueryGetSendToTezosSignedResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetSendToTezosSignedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetSendToTezosSignedResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetSendToTezosSignedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetSendToTezosSignedResponse.Merge(m, src)
+}
+func (m *QueryGetSendToTezosSignedResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetSendToTezosSignedResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetSendToTezosSignedResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetSendToTezosSignedResponse proto.InternalMessageInfo
+
+func (m *QueryGetSendToTezosSignedResponse) GetSendToTezosSigned() *SendToTezosSigned {
+	if m != nil {
+		return m.SendToTezosSigned
+	}
+	return nil
+}
+
+type QueryAllSendToTezosSignedRequest struct {
+	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllSendToTezosSignedRequest) Reset()         { *m = QueryAllSendToTezosSignedRequest{} }
+func (m *QueryAllSendToTezosSignedRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryAllSendToTezosSignedRequest) ProtoMessage()    {}
+func (*QueryAllSendToTezosSignedRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{2}
+}
+func (m *QueryAllSendToTezosSignedRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllSendToTezosSignedRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllSendToTezosSignedRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllSendToTezosSignedRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllSendToTezosSignedRequest.Merge(m, src)
+}
+func (m *QueryAllSendToTezosSignedRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllSendToTezosSignedRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllSendToTezosSignedRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllSendToTezosSignedRequest proto.InternalMessageInfo
+
+func (m *QueryAllSendToTezosSignedRequest) GetPagination() *query.PageRequest {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryAllSendToTezosSignedResponse struct {
+	SendToTezosSigned []*SendToTezosSigned `protobuf:"bytes,1,rep,name=SendToTezosSigned,proto3" json:"SendToTezosSigned,omitempty"`
+	Pagination        *query.PageResponse  `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllSendToTezosSignedResponse) Reset()         { *m = QueryAllSendToTezosSignedResponse{} }
+func (m *QueryAllSendToTezosSignedResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryAllSendToTezosSignedResponse) ProtoMessage()    {}
+func (*QueryAllSendToTezosSignedResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{3}
+}
+func (m *QueryAllSendToTezosSignedResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllSendToTezosSignedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllSendToTezosSignedResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllSendToTezosSignedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllSendToTezosSignedResponse.Merge(m, src)
+}
+func (m *QueryAllSendToTezosSignedResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllSendToTezosSignedResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllSendToTezosSignedResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllSendToTezosSignedResponse proto.InternalMessageInfo
+
+func (m *QueryAllSendToTezosSignedResponse) GetSendToTezosSigned() []*SendToTezosSigned {
+	if m != nil {
+		return m.SendToTezosSigned
+	}
+	return nil
+}
+
+func (m *QueryAllSendToTezosSignedResponse) GetPagination() *query.PageResponse {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryGetReceivedFa12TxsRequest struct {
+	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (m *QueryGetReceivedFa12TxsRequest) Reset()         { *m = QueryGetReceivedFa12TxsRequest{} }
+func (m *QueryGetReceivedFa12TxsRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryGetReceivedFa12TxsRequest) ProtoMessage()    {}
+func (*QueryGetReceivedFa12TxsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{4}
+}
+func (m *QueryGetReceivedFa12TxsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetReceivedFa12TxsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetReceivedFa12TxsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetReceivedFa12TxsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetReceivedFa12TxsRequest.Merge(m, src)
+}
+func (m *QueryGetReceivedFa12TxsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetReceivedFa12TxsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetReceivedFa12TxsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetReceivedFa12TxsRequest proto.InternalMessageInfo
+
+func (m *QueryGetReceivedFa12TxsRequest) GetId() uint64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+type QueryGetReceivedFa12TxsResponse struct {
+	ReceivedFa12Txs *ReceivedFa12Txs `protobuf:"bytes,1,opt,name=ReceivedFa12Txs,proto3" json:"ReceivedFa12Txs,omitempty"`
+}
+
+func (m *QueryGetReceivedFa12TxsResponse) Reset()         { *m = QueryGetReceivedFa12TxsResponse{} }
+func (m *QueryGetReceivedFa12TxsResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryGetReceivedFa12TxsResponse) ProtoMessage()    {}
+func (*QueryGetReceivedFa12TxsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{5}
+}
+func (m *QueryGetReceivedFa12TxsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetReceivedFa12TxsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetReceivedFa12TxsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetReceivedFa12TxsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetReceivedFa12TxsResponse.Merge(m, src)
+}
+func (m *QueryGetReceivedFa12TxsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetReceivedFa12TxsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetReceivedFa12TxsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetReceivedFa12TxsResponse proto.InternalMessageInfo
+
+func (m *QueryGetReceivedFa12TxsResponse) GetReceivedFa12Txs() *ReceivedFa12Txs {
+	if m != nil {
+		return m.ReceivedFa12Txs
+	}
+	return nil
+}
+
+type QueryAllReceivedFa12TxsRequest struct {
+	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllReceivedFa12TxsRequest) Reset()         { *m = QueryAllReceivedFa12TxsRequest{} }
+func (m *QueryAllReceivedFa12TxsRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryAllReceivedFa12TxsRequest) ProtoMessage()    {}
+func (*QueryAllReceivedFa12TxsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{6}
+}
+func (m *QueryAllReceivedFa12TxsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllReceivedFa12TxsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllReceivedFa12TxsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllReceivedFa12TxsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllReceivedFa12TxsRequest.Merge(m, src)
+}
+func (m *QueryAllReceivedFa12TxsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllReceivedFa12TxsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllReceivedFa12TxsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllReceivedFa12TxsRequest proto.InternalMessageInfo
+
+func (m *QueryAllReceivedFa12TxsRequest) GetPagination() *query.PageRequest {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryAllReceivedFa12TxsResponse struct {
+	ReceivedFa12Txs []*ReceivedFa12Txs  `protobuf:"bytes,1,rep,name=ReceivedFa12Txs,proto3" json:"ReceivedFa12Txs,omitempty"`
+	Pagination      *query.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllReceivedFa12TxsResponse) Reset()         { *m = QueryAllReceivedFa12TxsResponse{} }
+func (m *QueryAllReceivedFa12TxsResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryAllReceivedFa12TxsResponse) ProtoMessage()    {}
+func (*QueryAllReceivedFa12TxsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{7}
+}
+func (m *QueryAllReceivedFa12TxsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllReceivedFa12TxsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllReceivedFa12TxsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllReceivedFa12TxsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllReceivedFa12TxsResponse.Merge(m, src)
+}
+func (m *QueryAllReceivedFa12TxsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllReceivedFa12TxsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllReceivedFa12TxsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllReceivedFa12TxsResponse proto.InternalMessageInfo
+
+func (m *QueryAllReceivedFa12TxsResponse) GetReceivedFa12Txs() []*ReceivedFa12Txs {
+	if m != nil {
+		return m.ReceivedFa12Txs
+	}
+	return nil
+}
+
+func (m *QueryAllReceivedFa12TxsResponse) GetPagination() *query.PageResponse {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryGetSendToTezosRequest struct {
+	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (m *QueryGetSendToTezosRequest) Reset()         { *m = QueryGetSendToTezosRequest{} }
+func (m *QueryGetSendToTezosRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryGetSendToTezosRequest) ProtoMessage()    {}
+func (*QueryGetSendToTezosRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{8}
+}
+func (m *QueryGetSendToTezosRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetSendToTezosRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetSendToTezosRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetSendToTezosRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetSendToTezosRequest.Merge(m, src)
+}
+func (m *QueryGetSendToTezosRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetSendToTezosRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetSendToTezosRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetSendToTezosRequest proto.InternalMessageInfo
+
+func (m *QueryGetSendToTezosRequest) GetId() uint64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+type QueryGetSendToTezosResponse struct {
+	SendToTezos *SendToTezos `protobuf:"bytes,1,opt,name=SendToTezos,proto3" json:"SendToTezos,omitempty"`
+}
+
+func (m *QueryGetSendToTezosResponse) Reset()         { *m = QueryGetSendToTezosResponse{} }
+func (m *QueryGetSendToTezosResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryGetSendToTezosResponse) ProtoMessage()    {}
+func (*QueryGetSendToTezosResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{9}
+}
+func (m *QueryGetSendToTezosResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetSendToTezosResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetSendToTezosResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetSendToTezosResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetSendToTezosResponse.Merge(m, src)
+}
+func (m *QueryGetSendToTezosResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetSendToTezosResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetSendToTezosResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetSendToTezosResponse proto.InternalMessageInfo
+
+func (m *QueryGetSendToTezosResponse) GetSendToTezos() *SendToTezos {
+	if m != nil {
+		return m.SendToTezos
+	}
+	return nil
+}
+
+type QueryAllSendToTezosRequest struct {
+	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllSendToTezosRequest) Reset()         { *m = QueryAllSendToTezosRequest{} }
+func (m *QueryAllSendToTezosRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryAllSendToTezosRequest) ProtoMessage()    {}
+func (*QueryAllSendToTezosRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{10}
+}
+func (m *QueryAllSendToTezosRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllSendToTezosRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllSendToTezosRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllSendToTezosRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllSendToTezosRequest.Merge(m, src)
+}
+func (m *QueryAllSendToTezosRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllSendToTezosRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllSendToTezosRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllSendToTezosRequest proto.InternalMessageInfo
+
+func (m *QueryAllSendToTezosRequest) GetPagination() *query.PageRequest {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryAllSendToTezosResponse struct {
+	SendToTezos []*SendToTezos      `protobuf:"bytes,1,rep,name=SendToTezos,proto3" json:"SendToTezos,omitempty"`
+	Pagination  *query.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllSendToTezosResponse) Reset()         { *m = QueryAllSendToTezosResponse{} }
+func (m *QueryAllSendToTezosResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryAllSendToTezosResponse) ProtoMessage()    {}
+func (*QueryAllSendToTezosResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{11}
+}
+func (m *QueryAllSendToTezosResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllSendToTezosResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllSendToTezosResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllSendToTezosResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllSendToTezosResponse.Merge(m, src)
+}
+func (m *QueryAllSendToTezosResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllSendToTezosResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllSendToTezosResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllSendToTezosResponse proto.InternalMessageInfo
+
+func (m *QueryAllSendToTezosResponse) GetSendToTezos() []*SendToTezos {
+	if m != nil {
+		return m.SendToTezos
+	}
+	return nil
+}
+
+func (m *QueryAllSendToTezosResponse) GetPagination() *query.PageResponse {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryGetReceivedTxsRequest struct {
+	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (m *QueryGetReceivedTxsRequest) Reset()         { *m = QueryGetReceivedTxsRequest{} }
+func (m *QueryGetReceivedTxsRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryGetReceivedTxsRequest) ProtoMessage()    {}
+func (*QueryGetReceivedTxsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{12}
+}
+func (m *QueryGetReceivedTxsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetReceivedTxsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetReceivedTxsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetReceivedTxsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetReceivedTxsRequest.Merge(m, src)
+}
+func (m *QueryGetReceivedTxsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetReceivedTxsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetReceivedTxsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetReceivedTxsRequest proto.InternalMessageInfo
+
+func (m *QueryGetReceivedTxsRequest) GetId() uint64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+type QueryGetReceivedTxsResponse struct {
+	ReceivedTxs *ReceivedTxs `protobuf:"bytes,1,opt,name=ReceivedTxs,proto3" json:"ReceivedTxs,omitempty"`
+}
+
+func (m *QueryGetReceivedTxsResponse) Reset()         { *m = QueryGetReceivedTxsResponse{} }
+func (m *QueryGetReceivedTxsResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryGetReceivedTxsResponse) ProtoMessage()    {}
+func (*QueryGetReceivedTxsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{13}
+}
+func (m *QueryGetReceivedTxsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetReceivedTxsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetReceivedTxsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetReceivedTxsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetReceivedTxsResponse.Merge(m, src)
+}
+func (m *QueryGetReceivedTxsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetReceivedTxsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetReceivedTxsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetReceivedTxsResponse proto.InternalMessageInfo
+
+func (m *QueryGetReceivedTxsResponse) GetReceivedTxs() *ReceivedTxs {
+	if m != nil {
+		return m.ReceivedTxs
+	}
+	return nil
+}
+
+type QueryAllReceivedTxsRequest struct {
+	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllReceivedTxsRequest) Reset()         { *m = QueryAllReceivedTxsRequest{} }
+func (m *QueryAllReceivedTxsRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryAllReceivedTxsRequest) ProtoMessage()    {}
+func (*QueryAllReceivedTxsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{14}
+}
+func (m *QueryAllReceivedTxsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllReceivedTxsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllReceivedTxsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllReceivedTxsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllReceivedTxsRequest.Merge(m, src)
+}
+func (m *QueryAllReceivedTxsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllReceivedTxsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllReceivedTxsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllReceivedTxsRequest proto.InternalMessageInfo
+
+func (m *QueryAllReceivedTxsRequest) GetPagination() *query.PageRequest {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryAllReceivedTxsResponse struct {
+	ReceivedTxs []*ReceivedTxs      `protobuf:"bytes,1,rep,name=ReceivedTxs,proto3" json:"ReceivedTxs,omitempty"`
+	Pagination  *query.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllReceivedTxsResponse) Reset()         { *m = QueryAllReceivedTxsResponse{} }
+func (m *QueryAllReceivedTxsResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryAllReceivedTxsResponse) ProtoMessage()    {}
+func (*QueryAllReceivedTxsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36ace7054f38d626, []int{15}
+}
+func (m *QueryAllReceivedTxsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllReceivedTxsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllReceivedTxsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllReceivedTxsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllReceivedTxsResponse.Merge(m, src)
+}
+func (m *QueryAllReceivedTxsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllReceivedTxsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllReceivedTxsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllReceivedTxsResponse proto.InternalMessageInfo
+
+func (m *QueryAllReceivedTxsResponse) GetReceivedTxs() []*ReceivedTxs {
+	if m != nil {
+		return m.ReceivedTxs
+	}
+	return nil
+}
+
+func (m *QueryAllReceivedTxsResponse) GetPagination() *query.PageResponse {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+func init() {
+	proto.RegisterType((*QueryGetSendToTezosSignedRequest)(nil), "sap200.bifrost.bifrost.QueryGetSendToTezosSignedRequest")
+	proto.RegisterType((*QueryGetSendToTezosSignedResponse)(nil), "sap200.bifrost.bifrost.QueryGetSendToTezosSignedResponse")
+	proto.RegisterType((*QueryAllSendToTezosSignedRequest)(nil), "sap200.bifrost.bifrost.QueryAllSendToTezosSignedRequest")
+	proto.RegisterType((*QueryAllSendToTezosSignedResponse)(nil), "sap200.bifrost.bifrost.QueryAllSendToTezosSignedResponse")
+	proto.RegisterType((*QueryGetReceivedFa12TxsRequest)(nil), "sap200.bifrost.bifrost.QueryGetReceivedFa12TxsRequest")
+	proto.RegisterType((*QueryGetReceivedFa12TxsResponse)(nil), "sap200.bifrost.bifrost.QueryGetReceivedFa12TxsResponse")
+	proto.RegisterType((*QueryAllReceivedFa12TxsRequest)(nil), "sap200.bifrost.bifrost.QueryAllReceivedFa12TxsRequest")
+	proto.RegisterType((*QueryAllReceivedFa12TxsResponse)(nil), "sap200.bifrost.bifrost.QueryAllReceivedFa12TxsResponse")
+	proto.RegisterType((*QueryGetSendToTezosRequest)(nil), "sap200.bifrost.bifrost.QueryGetSendToTezosRequest")
+	proto.RegisterType((*QueryGetSendToTezosResponse)(nil), "sap200.bifrost.bifrost.QueryGetSendToTezosResponse")
+	proto.RegisterType((*QueryAllSendToTezosRequest)(nil), "sap200.bifrost.bifrost.QueryAllSendToTezosRequest")
+	proto.RegisterType((*QueryAllSendToTezosResponse)(nil), "sap200.bifrost.bifrost.QueryAllSendToTezosResponse")
+	proto.RegisterType((*QueryGetReceivedTxsRequest)(nil), "sap200.bifrost.bifrost.QueryGetReceivedTxsRequest")
+	proto.RegisterType((*QueryGetReceivedTxsResponse)(nil), "sap200.bifrost.bifrost.QueryGetReceivedTxsResponse")
+	proto.RegisterType((*QueryAllReceivedTxsRequest)(nil), "sap200.bifrost.bifrost.QueryAllReceivedTxsRequest")
+	proto.RegisterType((*QueryAllReceivedTxsResponse)(nil), "sap200.bifrost.bifrost.QueryAllReceivedTxsResponse")
+}
+
 func init() { proto.RegisterFile("bifrost/query.proto", fileDescriptor_36ace7054f38d626) }
 
 var fileDescriptor_36ace7054f38d626 = []byte{
-	// 183 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x4e, 0xca, 0x4c, 0x2b,
-	0xca, 0x2f, 0x2e, 0xd1, 0x2f, 0x2c, 0x4d, 0x2d, 0xaa, 0xd4, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17,
-	0x12, 0x2b, 0x4e, 0x2c, 0x30, 0x32, 0x30, 0xd0, 0x83, 0xca, 0xc1, 0x68, 0x29, 0x99, 0xf4, 0xfc,
-	0xfc, 0xf4, 0x9c, 0x54, 0xfd, 0xc4, 0x82, 0x4c, 0xfd, 0xc4, 0xbc, 0xbc, 0xfc, 0x92, 0xc4, 0x92,
-	0xcc, 0xfc, 0xbc, 0x62, 0x88, 0x2e, 0x29, 0xad, 0xe4, 0xfc, 0xe2, 0xdc, 0xfc, 0x62, 0xfd, 0xa4,
-	0xc4, 0xe2, 0x54, 0x88, 0x71, 0xfa, 0x65, 0x86, 0x49, 0xa9, 0x25, 0x89, 0x86, 0xfa, 0x05, 0x89,
-	0xe9, 0x99, 0x79, 0x60, 0xc5, 0x10, 0xb5, 0x46, 0xec, 0x5c, 0xac, 0x81, 0x20, 0x15, 0x4e, 0xce,
-	0x27, 0x1e, 0xc9, 0x31, 0x5e, 0x78, 0x24, 0xc7, 0xf8, 0xe0, 0x91, 0x1c, 0xe3, 0x84, 0xc7, 0x72,
-	0x0c, 0x17, 0x1e, 0xcb, 0x31, 0xdc, 0x78, 0x2c, 0xc7, 0x10, 0xa5, 0x99, 0x9e, 0x59, 0x92, 0x51,
-	0x9a, 0xa4, 0x97, 0x9c, 0x9f, 0xab, 0x0f, 0x71, 0x8f, 0x3e, 0xcc, 0xad, 0x15, 0x70, 0x56, 0x49,
-	0x65, 0x41, 0x6a, 0x71, 0x12, 0x1b, 0xd8, 0x50, 0x63, 0x40, 0x00, 0x00, 0x00, 0xff, 0xff, 0xd0,
-	0x46, 0xea, 0xbe, 0xcd, 0x00, 0x00, 0x00,
+	// 734 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x57, 0x3d, 0x6f, 0xd3, 0x4e,
+	0x18, 0xef, 0x25, 0xff, 0x3f, 0xc3, 0x45, 0x2a, 0xe2, 0x40, 0x08, 0x02, 0xb8, 0xc5, 0x15, 0xa4,
+	0x69, 0x2b, 0x3b, 0x71, 0x50, 0x80, 0x31, 0x20, 0xda, 0x95, 0xba, 0x91, 0x90, 0xd8, 0x9c, 0xf8,
+	0x70, 0x8d, 0x5c, 0x9f, 0x9b, 0x73, 0xaa, 0x96, 0x97, 0x85, 0x4f, 0x80, 0xc4, 0x77, 0x00, 0x16,
+	0x56, 0xc4, 0x02, 0x62, 0x41, 0x62, 0xac, 0xc4, 0xc2, 0x88, 0x12, 0x3e, 0x08, 0x8a, 0x7d, 0x6e,
+	0xce, 0x8e, 0x1d, 0xdb, 0x69, 0x3a, 0xb5, 0xca, 0xdd, 0xef, 0xb9, 0xdf, 0xcb, 0xe3, 0x7b, 0x6c,
+	0x78, 0xb1, 0x63, 0x3e, 0xeb, 0x11, 0xea, 0xca, 0xfb, 0x7d, 0xdc, 0x3b, 0x92, 0x9c, 0x1e, 0x71,
+	0x09, 0xba, 0x4c, 0x35, 0x47, 0xa9, 0xd5, 0x24, 0xb6, 0x16, 0xfc, 0x2d, 0x5f, 0x37, 0x08, 0x31,
+	0x2c, 0x2c, 0x6b, 0x8e, 0x29, 0x6b, 0xb6, 0x4d, 0x5c, 0xcd, 0x35, 0x89, 0x4d, 0x7d, 0x54, 0x79,
+	0xad, 0x4b, 0xe8, 0x1e, 0xa1, 0x72, 0x47, 0xa3, 0xd8, 0x2f, 0x27, 0x1f, 0xd4, 0x3b, 0xd8, 0xd5,
+	0xea, 0xb2, 0xa3, 0x19, 0xa6, 0xed, 0x6d, 0x66, 0x7b, 0x97, 0x82, 0x63, 0x29, 0xb6, 0xf5, 0x36,
+	0x69, 0xe3, 0x17, 0x84, 0xee, 0x98, 0x86, 0x8d, 0x75, 0xb6, 0xe1, 0x46, 0xb0, 0xa1, 0x87, 0xbb,
+	0xd8, 0x3c, 0xc0, 0xfa, 0xa6, 0x56, 0x57, 0xda, 0x87, 0xc1, 0x59, 0x57, 0x63, 0xf0, 0xd1, 0xa5,
+	0x00, 0x79, 0x82, 0x12, 0x15, 0xb8, 0xbc, 0x3d, 0xe2, 0xb5, 0x85, 0xdd, 0x9d, 0xe8, 0xb9, 0x2a,
+	0xde, 0xef, 0x63, 0xea, 0xa2, 0x45, 0x58, 0x30, 0xf5, 0x2b, 0x60, 0x19, 0xac, 0xfe, 0xa7, 0x16,
+	0x4c, 0x5d, 0x7c, 0x05, 0x6f, 0x4e, 0xc1, 0x50, 0x87, 0xd8, 0x14, 0xa3, 0x27, 0xf0, 0xc2, 0xc4,
+	0xa2, 0x57, 0xa3, 0xa4, 0x54, 0xa5, 0x78, 0x33, 0xa5, 0xc9, 0x6a, 0x93, 0x35, 0xc4, 0xe7, 0x8c,
+	0x71, 0xcb, 0xb2, 0x12, 0x19, 0x6f, 0x42, 0x38, 0xf6, 0x97, 0x9d, 0x7a, 0x5b, 0xf2, 0xc3, 0x90,
+	0x46, 0x61, 0x48, 0x7e, 0xb6, 0x2c, 0x0c, 0xe9, 0xb1, 0x66, 0x60, 0x86, 0x55, 0x39, 0xa4, 0xf8,
+	0x03, 0x30, 0xa9, 0xf1, 0x87, 0x4d, 0x97, 0x5a, 0x3c, 0xad, 0x54, 0xb4, 0x15, 0x92, 0x51, 0xf0,
+	0x64, 0x54, 0x52, 0x65, 0xf8, 0xac, 0x42, 0x3a, 0x6a, 0x50, 0x08, 0x12, 0x53, 0xc3, 0xcd, 0x93,
+	0x94, 0xb1, 0x0b, 0x97, 0x12, 0x11, 0x4c, 0xf6, 0x36, 0x3c, 0x1f, 0x59, 0x62, 0x4e, 0x57, 0x92,
+	0x44, 0x47, 0x2b, 0x45, 0xf1, 0xe2, 0x2e, 0xe3, 0xd9, 0xb2, 0xac, 0x04, 0x9e, 0xf3, 0x4a, 0xf6,
+	0x2b, 0x60, 0x02, 0xe3, 0x8e, 0x9a, 0x26, 0xb0, 0x78, 0x1a, 0x81, 0xf3, 0x4b, 0x74, 0x03, 0x96,
+	0x63, 0x9e, 0xc1, 0xa4, 0x34, 0x75, 0x78, 0x2d, 0x76, 0x37, 0x13, 0xfa, 0x08, 0x96, 0xb8, 0x9f,
+	0x99, 0xab, 0x2b, 0x19, 0x5a, 0x57, 0xe5, 0x71, 0xa2, 0xce, 0x38, 0x85, 0x1f, 0x96, 0x79, 0x27,
+	0xf7, 0x09, 0x30, 0x31, 0xd1, 0x63, 0x92, 0xc4, 0x14, 0x67, 0x11, 0x73, 0x26, 0x49, 0xa9, 0xe3,
+	0xeb, 0x37, 0x43, 0x52, 0xa1, 0xdd, 0x63, 0x71, 0xdc, 0xcf, 0x69, 0x49, 0xf1, 0x15, 0x78, 0x1c,
+	0x9f, 0x54, 0x0c, 0xa7, 0xb3, 0x48, 0x2a, 0x93, 0x98, 0xe2, 0x2c, 0x62, 0xe6, 0x96, 0x94, 0xf2,
+	0xa1, 0x04, 0xff, 0xf7, 0xf8, 0xa2, 0xef, 0x20, 0xe6, 0x4a, 0x47, 0xf7, 0x92, 0xa8, 0xa5, 0x4d,
+	0xd0, 0xf2, 0xfd, 0x19, 0x90, 0x3e, 0x41, 0xb1, 0xf9, 0xe6, 0xd7, 0xdf, 0x77, 0x85, 0x1a, 0x92,
+	0x64, 0xbf, 0x84, 0x1c, 0xcc, 0xf2, 0xc4, 0xd7, 0x05, 0xf9, 0xa5, 0xa9, 0xbf, 0x46, 0xdf, 0x00,
+	0xbc, 0x34, 0x51, 0xb5, 0x65, 0x59, 0x29, 0x2a, 0xa6, 0x4c, 0xd5, 0x14, 0x15, 0xd3, 0x46, 0xa4,
+	0x58, 0xf7, 0x54, 0xac, 0xa3, 0x6a, 0x66, 0x15, 0xe8, 0x0b, 0x98, 0xb8, 0x7e, 0x51, 0x33, 0xcd,
+	0xc7, 0xf8, 0xa9, 0x51, 0xbe, 0x9b, 0x1b, 0xc7, 0x78, 0xdf, 0xf1, 0x78, 0x4b, 0x68, 0x23, 0x89,
+	0x77, 0xe4, 0x5d, 0xcc, 0xf7, 0xfe, 0x33, 0x80, 0x28, 0x52, 0x71, 0xe4, 0x7c, 0x33, 0xcd, 0xbf,
+	0x99, 0xd8, 0x27, 0x0f, 0x30, 0x51, 0xf6, 0xd8, 0x57, 0x51, 0x25, 0x23, 0x7b, 0xf4, 0x11, 0x84,
+	0x2e, 0x4f, 0xa4, 0xe4, 0xe8, 0xdb, 0x80, 0x6d, 0x23, 0x17, 0x86, 0x31, 0xad, 0x79, 0x4c, 0xd7,
+	0xd0, 0x6a, 0x86, 0xfe, 0xf0, 0x3d, 0x7e, 0x0f, 0xe0, 0x22, 0x57, 0x69, 0xe4, 0xaf, 0x92, 0xa3,
+	0x3f, 0xb3, 0xb1, 0x8d, 0x1f, 0x31, 0xe2, 0xba, 0xc7, 0xf6, 0x16, 0x5a, 0xc9, 0xc0, 0xd6, 0xf3,
+	0x94, 0xbf, 0xae, 0x94, 0xac, 0xbd, 0xc8, 0x75, 0x40, 0x23, 0x17, 0x26, 0xab, 0xa7, 0xdc, 0xd7,
+	0xc0, 0xd8, 0x53, 0xae, 0x52, 0x26, 0x4f, 0x73, 0xb3, 0x8d, 0x1f, 0x06, 0xe9, 0x9e, 0x72, 0x6c,
+	0x1f, 0x3c, 0xfc, 0x39, 0x10, 0xc0, 0xf1, 0x40, 0x00, 0x7f, 0x06, 0x02, 0x78, 0x3b, 0x14, 0x16,
+	0x8e, 0x87, 0xc2, 0xc2, 0xef, 0xa1, 0xb0, 0xf0, 0xb4, 0x6a, 0x98, 0xee, 0x6e, 0xbf, 0x23, 0x75,
+	0xc9, 0x5e, 0xb4, 0xd0, 0xe1, 0xc9, 0x7f, 0xee, 0x91, 0x83, 0x69, 0xe7, 0x9c, 0xf7, 0x05, 0xd4,
+	0xf8, 0x17, 0x00, 0x00, 0xff, 0xff, 0xc2, 0x1e, 0x59, 0xad, 0xf0, 0x0d, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -55,6 +849,22 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type QueryClient interface {
+	// Queries a sendToTezosSigned by id.
+	SendToTezosSigned(ctx context.Context, in *QueryGetSendToTezosSignedRequest, opts ...grpc.CallOption) (*QueryGetSendToTezosSignedResponse, error)
+	// Queries a list of sendToTezosSigned items.
+	SendToTezosSignedAll(ctx context.Context, in *QueryAllSendToTezosSignedRequest, opts ...grpc.CallOption) (*QueryAllSendToTezosSignedResponse, error)
+	// Queries a receivedFa12Txs by id.
+	ReceivedFa12Txs(ctx context.Context, in *QueryGetReceivedFa12TxsRequest, opts ...grpc.CallOption) (*QueryGetReceivedFa12TxsResponse, error)
+	// Queries a list of receivedFa12Txs items.
+	ReceivedFa12TxsAll(ctx context.Context, in *QueryAllReceivedFa12TxsRequest, opts ...grpc.CallOption) (*QueryAllReceivedFa12TxsResponse, error)
+	// Queries a sendToTezos by id.
+	SendToTezos(ctx context.Context, in *QueryGetSendToTezosRequest, opts ...grpc.CallOption) (*QueryGetSendToTezosResponse, error)
+	// Queries a list of sendToTezos items.
+	SendToTezosAll(ctx context.Context, in *QueryAllSendToTezosRequest, opts ...grpc.CallOption) (*QueryAllSendToTezosResponse, error)
+	// Queries a receivedTxs by id.
+	ReceivedTxs(ctx context.Context, in *QueryGetReceivedTxsRequest, opts ...grpc.CallOption) (*QueryGetReceivedTxsResponse, error)
+	// Queries a list of receivedTxs items.
+	ReceivedTxsAll(ctx context.Context, in *QueryAllReceivedTxsRequest, opts ...grpc.CallOption) (*QueryAllReceivedTxsResponse, error)
 }
 
 type queryClient struct {
@@ -65,22 +875,2674 @@ func NewQueryClient(cc grpc1.ClientConn) QueryClient {
 	return &queryClient{cc}
 }
 
+func (c *queryClient) SendToTezosSigned(ctx context.Context, in *QueryGetSendToTezosSignedRequest, opts ...grpc.CallOption) (*QueryGetSendToTezosSignedResponse, error) {
+	out := new(QueryGetSendToTezosSignedResponse)
+	err := c.cc.Invoke(ctx, "/sap200.bifrost.bifrost.Query/SendToTezosSigned", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) SendToTezosSignedAll(ctx context.Context, in *QueryAllSendToTezosSignedRequest, opts ...grpc.CallOption) (*QueryAllSendToTezosSignedResponse, error) {
+	out := new(QueryAllSendToTezosSignedResponse)
+	err := c.cc.Invoke(ctx, "/sap200.bifrost.bifrost.Query/SendToTezosSignedAll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) ReceivedFa12Txs(ctx context.Context, in *QueryGetReceivedFa12TxsRequest, opts ...grpc.CallOption) (*QueryGetReceivedFa12TxsResponse, error) {
+	out := new(QueryGetReceivedFa12TxsResponse)
+	err := c.cc.Invoke(ctx, "/sap200.bifrost.bifrost.Query/ReceivedFa12Txs", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) ReceivedFa12TxsAll(ctx context.Context, in *QueryAllReceivedFa12TxsRequest, opts ...grpc.CallOption) (*QueryAllReceivedFa12TxsResponse, error) {
+	out := new(QueryAllReceivedFa12TxsResponse)
+	err := c.cc.Invoke(ctx, "/sap200.bifrost.bifrost.Query/ReceivedFa12TxsAll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) SendToTezos(ctx context.Context, in *QueryGetSendToTezosRequest, opts ...grpc.CallOption) (*QueryGetSendToTezosResponse, error) {
+	out := new(QueryGetSendToTezosResponse)
+	err := c.cc.Invoke(ctx, "/sap200.bifrost.bifrost.Query/SendToTezos", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) SendToTezosAll(ctx context.Context, in *QueryAllSendToTezosRequest, opts ...grpc.CallOption) (*QueryAllSendToTezosResponse, error) {
+	out := new(QueryAllSendToTezosResponse)
+	err := c.cc.Invoke(ctx, "/sap200.bifrost.bifrost.Query/SendToTezosAll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) ReceivedTxs(ctx context.Context, in *QueryGetReceivedTxsRequest, opts ...grpc.CallOption) (*QueryGetReceivedTxsResponse, error) {
+	out := new(QueryGetReceivedTxsResponse)
+	err := c.cc.Invoke(ctx, "/sap200.bifrost.bifrost.Query/ReceivedTxs", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) ReceivedTxsAll(ctx context.Context, in *QueryAllReceivedTxsRequest, opts ...grpc.CallOption) (*QueryAllReceivedTxsResponse, error) {
+	out := new(QueryAllReceivedTxsResponse)
+	err := c.cc.Invoke(ctx, "/sap200.bifrost.bifrost.Query/ReceivedTxsAll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 type QueryServer interface {
+	// Queries a sendToTezosSigned by id.
+	SendToTezosSigned(context.Context, *QueryGetSendToTezosSignedRequest) (*QueryGetSendToTezosSignedResponse, error)
+	// Queries a list of sendToTezosSigned items.
+	SendToTezosSignedAll(context.Context, *QueryAllSendToTezosSignedRequest) (*QueryAllSendToTezosSignedResponse, error)
+	// Queries a receivedFa12Txs by id.
+	ReceivedFa12Txs(context.Context, *QueryGetReceivedFa12TxsRequest) (*QueryGetReceivedFa12TxsResponse, error)
+	// Queries a list of receivedFa12Txs items.
+	ReceivedFa12TxsAll(context.Context, *QueryAllReceivedFa12TxsRequest) (*QueryAllReceivedFa12TxsResponse, error)
+	// Queries a sendToTezos by id.
+	SendToTezos(context.Context, *QueryGetSendToTezosRequest) (*QueryGetSendToTezosResponse, error)
+	// Queries a list of sendToTezos items.
+	SendToTezosAll(context.Context, *QueryAllSendToTezosRequest) (*QueryAllSendToTezosResponse, error)
+	// Queries a receivedTxs by id.
+	ReceivedTxs(context.Context, *QueryGetReceivedTxsRequest) (*QueryGetReceivedTxsResponse, error)
+	// Queries a list of receivedTxs items.
+	ReceivedTxsAll(context.Context, *QueryAllReceivedTxsRequest) (*QueryAllReceivedTxsResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
 type UnimplementedQueryServer struct {
 }
 
+func (*UnimplementedQueryServer) SendToTezosSigned(ctx context.Context, req *QueryGetSendToTezosSignedRequest) (*QueryGetSendToTezosSignedResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendToTezosSigned not implemented")
+}
+func (*UnimplementedQueryServer) SendToTezosSignedAll(ctx context.Context, req *QueryAllSendToTezosSignedRequest) (*QueryAllSendToTezosSignedResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendToTezosSignedAll not implemented")
+}
+func (*UnimplementedQueryServer) ReceivedFa12Txs(ctx context.Context, req *QueryGetReceivedFa12TxsRequest) (*QueryGetReceivedFa12TxsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReceivedFa12Txs not implemented")
+}
+func (*UnimplementedQueryServer) ReceivedFa12TxsAll(ctx context.Context, req *QueryAllReceivedFa12TxsRequest) (*QueryAllReceivedFa12TxsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReceivedFa12TxsAll not implemented")
+}
+func (*UnimplementedQueryServer) SendToTezos(ctx context.Context, req *QueryGetSendToTezosRequest) (*QueryGetSendToTezosResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendToTezos not implemented")
+}
+func (*UnimplementedQueryServer) SendToTezosAll(ctx context.Context, req *QueryAllSendToTezosRequest) (*QueryAllSendToTezosResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendToTezosAll not implemented")
+}
+func (*UnimplementedQueryServer) ReceivedTxs(ctx context.Context, req *QueryGetReceivedTxsRequest) (*QueryGetReceivedTxsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReceivedTxs not implemented")
+}
+func (*UnimplementedQueryServer) ReceivedTxsAll(ctx context.Context, req *QueryAllReceivedTxsRequest) (*QueryAllReceivedTxsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReceivedTxsAll not implemented")
+}
+
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
 	s.RegisterService(&_Query_serviceDesc, srv)
+}
+
+func _Query_SendToTezosSigned_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetSendToTezosSignedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).SendToTezosSigned(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sap200.bifrost.bifrost.Query/SendToTezosSigned",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).SendToTezosSigned(ctx, req.(*QueryGetSendToTezosSignedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_SendToTezosSignedAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllSendToTezosSignedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).SendToTezosSignedAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sap200.bifrost.bifrost.Query/SendToTezosSignedAll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).SendToTezosSignedAll(ctx, req.(*QueryAllSendToTezosSignedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_ReceivedFa12Txs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetReceivedFa12TxsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).ReceivedFa12Txs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sap200.bifrost.bifrost.Query/ReceivedFa12Txs",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).ReceivedFa12Txs(ctx, req.(*QueryGetReceivedFa12TxsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_ReceivedFa12TxsAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllReceivedFa12TxsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).ReceivedFa12TxsAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sap200.bifrost.bifrost.Query/ReceivedFa12TxsAll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).ReceivedFa12TxsAll(ctx, req.(*QueryAllReceivedFa12TxsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_SendToTezos_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetSendToTezosRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).SendToTezos(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sap200.bifrost.bifrost.Query/SendToTezos",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).SendToTezos(ctx, req.(*QueryGetSendToTezosRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_SendToTezosAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllSendToTezosRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).SendToTezosAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sap200.bifrost.bifrost.Query/SendToTezosAll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).SendToTezosAll(ctx, req.(*QueryAllSendToTezosRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_ReceivedTxs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetReceivedTxsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).ReceivedTxs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sap200.bifrost.bifrost.Query/ReceivedTxs",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).ReceivedTxs(ctx, req.(*QueryGetReceivedTxsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_ReceivedTxsAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllReceivedTxsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).ReceivedTxsAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sap200.bifrost.bifrost.Query/ReceivedTxsAll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).ReceivedTxsAll(ctx, req.(*QueryAllReceivedTxsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 var _Query_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "sap200.bifrost.bifrost.Query",
 	HandlerType: (*QueryServer)(nil),
-	Methods:     []grpc.MethodDesc{},
-	Streams:     []grpc.StreamDesc{},
-	Metadata:    "bifrost/query.proto",
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SendToTezosSigned",
+			Handler:    _Query_SendToTezosSigned_Handler,
+		},
+		{
+			MethodName: "SendToTezosSignedAll",
+			Handler:    _Query_SendToTezosSignedAll_Handler,
+		},
+		{
+			MethodName: "ReceivedFa12Txs",
+			Handler:    _Query_ReceivedFa12Txs_Handler,
+		},
+		{
+			MethodName: "ReceivedFa12TxsAll",
+			Handler:    _Query_ReceivedFa12TxsAll_Handler,
+		},
+		{
+			MethodName: "SendToTezos",
+			Handler:    _Query_SendToTezos_Handler,
+		},
+		{
+			MethodName: "SendToTezosAll",
+			Handler:    _Query_SendToTezosAll_Handler,
+		},
+		{
+			MethodName: "ReceivedTxs",
+			Handler:    _Query_ReceivedTxs_Handler,
+		},
+		{
+			MethodName: "ReceivedTxsAll",
+			Handler:    _Query_ReceivedTxsAll_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "bifrost/query.proto",
 }
+
+func (m *QueryGetSendToTezosSignedRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetSendToTezosSignedRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetSendToTezosSignedRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Id != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Id))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetSendToTezosSignedResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetSendToTezosSignedResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetSendToTezosSignedResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.SendToTezosSigned != nil {
+		{
+			size, err := m.SendToTezosSigned.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllSendToTezosSignedRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllSendToTezosSignedRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllSendToTezosSignedRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllSendToTezosSignedResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllSendToTezosSignedResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllSendToTezosSignedResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.SendToTezosSigned) > 0 {
+		for iNdEx := len(m.SendToTezosSigned) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.SendToTezosSigned[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetReceivedFa12TxsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetReceivedFa12TxsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetReceivedFa12TxsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Id != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Id))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetReceivedFa12TxsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetReceivedFa12TxsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetReceivedFa12TxsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.ReceivedFa12Txs != nil {
+		{
+			size, err := m.ReceivedFa12Txs.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllReceivedFa12TxsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllReceivedFa12TxsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllReceivedFa12TxsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllReceivedFa12TxsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllReceivedFa12TxsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllReceivedFa12TxsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.ReceivedFa12Txs) > 0 {
+		for iNdEx := len(m.ReceivedFa12Txs) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.ReceivedFa12Txs[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetSendToTezosRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetSendToTezosRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetSendToTezosRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Id != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Id))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetSendToTezosResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetSendToTezosResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetSendToTezosResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.SendToTezos != nil {
+		{
+			size, err := m.SendToTezos.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllSendToTezosRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllSendToTezosRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllSendToTezosRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllSendToTezosResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllSendToTezosResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllSendToTezosResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.SendToTezos) > 0 {
+		for iNdEx := len(m.SendToTezos) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.SendToTezos[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetReceivedTxsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetReceivedTxsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetReceivedTxsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Id != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Id))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetReceivedTxsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetReceivedTxsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetReceivedTxsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.ReceivedTxs != nil {
+		{
+			size, err := m.ReceivedTxs.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllReceivedTxsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllReceivedTxsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllReceivedTxsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllReceivedTxsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllReceivedTxsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllReceivedTxsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.ReceivedTxs) > 0 {
+		for iNdEx := len(m.ReceivedTxs) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.ReceivedTxs[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
+	offset -= sovQuery(v)
+	base := offset
+	for v >= 1<<7 {
+		dAtA[offset] = uint8(v&0x7f | 0x80)
+		v >>= 7
+		offset++
+	}
+	dAtA[offset] = uint8(v)
+	return base
+}
+func (m *QueryGetSendToTezosSignedRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovQuery(uint64(m.Id))
+	}
+	return n
+}
+
+func (m *QueryGetSendToTezosSignedResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.SendToTezosSigned != nil {
+		l = m.SendToTezosSigned.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAllSendToTezosSignedRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAllSendToTezosSignedResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.SendToTezosSigned) > 0 {
+		for _, e := range m.SendToTezosSigned {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryGetReceivedFa12TxsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovQuery(uint64(m.Id))
+	}
+	return n
+}
+
+func (m *QueryGetReceivedFa12TxsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ReceivedFa12Txs != nil {
+		l = m.ReceivedFa12Txs.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAllReceivedFa12TxsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAllReceivedFa12TxsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.ReceivedFa12Txs) > 0 {
+		for _, e := range m.ReceivedFa12Txs {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryGetSendToTezosRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovQuery(uint64(m.Id))
+	}
+	return n
+}
+
+func (m *QueryGetSendToTezosResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.SendToTezos != nil {
+		l = m.SendToTezos.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAllSendToTezosRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAllSendToTezosResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.SendToTezos) > 0 {
+		for _, e := range m.SendToTezos {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryGetReceivedTxsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovQuery(uint64(m.Id))
+	}
+	return n
+}
+
+func (m *QueryGetReceivedTxsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ReceivedTxs != nil {
+		l = m.ReceivedTxs.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAllReceivedTxsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAllReceivedTxsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.ReceivedTxs) > 0 {
+		for _, e := range m.ReceivedTxs {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func sovQuery(x uint64) (n int) {
+	return (math_bits.Len64(x|1) + 6) / 7
+}
+func sozQuery(x uint64) (n int) {
+	return sovQuery(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *QueryGetSendToTezosSignedRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetSendToTezosSignedRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetSendToTezosSignedRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetSendToTezosSignedResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetSendToTezosSignedResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetSendToTezosSignedResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SendToTezosSigned", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.SendToTezosSigned == nil {
+				m.SendToTezosSigned = &SendToTezosSigned{}
+			}
+			if err := m.SendToTezosSigned.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllSendToTezosSignedRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllSendToTezosSignedRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllSendToTezosSignedRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageRequest{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllSendToTezosSignedResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllSendToTezosSignedResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllSendToTezosSignedResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SendToTezosSigned", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SendToTezosSigned = append(m.SendToTezosSigned, &SendToTezosSigned{})
+			if err := m.SendToTezosSigned[len(m.SendToTezosSigned)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageResponse{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetReceivedFa12TxsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetReceivedFa12TxsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetReceivedFa12TxsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetReceivedFa12TxsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetReceivedFa12TxsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetReceivedFa12TxsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReceivedFa12Txs", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.ReceivedFa12Txs == nil {
+				m.ReceivedFa12Txs = &ReceivedFa12Txs{}
+			}
+			if err := m.ReceivedFa12Txs.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllReceivedFa12TxsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllReceivedFa12TxsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllReceivedFa12TxsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageRequest{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllReceivedFa12TxsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllReceivedFa12TxsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllReceivedFa12TxsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReceivedFa12Txs", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ReceivedFa12Txs = append(m.ReceivedFa12Txs, &ReceivedFa12Txs{})
+			if err := m.ReceivedFa12Txs[len(m.ReceivedFa12Txs)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageResponse{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetSendToTezosRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetSendToTezosRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetSendToTezosRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetSendToTezosResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetSendToTezosResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetSendToTezosResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SendToTezos", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.SendToTezos == nil {
+				m.SendToTezos = &SendToTezos{}
+			}
+			if err := m.SendToTezos.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllSendToTezosRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllSendToTezosRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllSendToTezosRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageRequest{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllSendToTezosResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllSendToTezosResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllSendToTezosResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SendToTezos", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SendToTezos = append(m.SendToTezos, &SendToTezos{})
+			if err := m.SendToTezos[len(m.SendToTezos)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageResponse{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetReceivedTxsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetReceivedTxsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetReceivedTxsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetReceivedTxsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetReceivedTxsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetReceivedTxsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReceivedTxs", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.ReceivedTxs == nil {
+				m.ReceivedTxs = &ReceivedTxs{}
+			}
+			if err := m.ReceivedTxs.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllReceivedTxsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllReceivedTxsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllReceivedTxsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageRequest{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllReceivedTxsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllReceivedTxsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllReceivedTxsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReceivedTxs", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ReceivedTxs = append(m.ReceivedTxs, &ReceivedTxs{})
+			if err := m.ReceivedTxs[len(m.ReceivedTxs)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageResponse{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func skipQuery(dAtA []byte) (n int, err error) {
+	l := len(dAtA)
+	iNdEx := 0
+	depth := 0
+	for iNdEx < l {
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return 0, ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return 0, io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		wireType := int(wire & 0x7)
+		switch wireType {
+		case 0:
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return 0, io.ErrUnexpectedEOF
+				}
+				iNdEx++
+				if dAtA[iNdEx-1] < 0x80 {
+					break
+				}
+			}
+		case 1:
+			iNdEx += 8
+		case 2:
+			var length int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return 0, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				length |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if length < 0 {
+				return 0, ErrInvalidLengthQuery
+			}
+			iNdEx += length
+		case 3:
+			depth++
+		case 4:
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupQuery
+			}
+			depth--
+		case 5:
+			iNdEx += 4
+		default:
+			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
+		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthQuery
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
+	}
+	return 0, io.ErrUnexpectedEOF
+}
+
+var (
+	ErrInvalidLengthQuery        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowQuery          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupQuery = fmt.Errorf("proto: unexpected end of group")
+)

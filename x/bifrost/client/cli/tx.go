@@ -31,5 +31,21 @@ func GetTxCmd() *cobra.Command {
 
 	// this line is used by starport scaffolding # 1
 
+	// cmd.AddCommand(CmdCreateSendToTezosSigned())
+	// cmd.AddCommand(CmdUpdateSendToTezosSigned())
+	// cmd.AddCommand(CmdDeleteSendToTezosSigned())
+
+	cmd.AddCommand(CmdCreateReceivedFa12Txs())
+	// cmd.AddCommand(CmdUpdateReceivedFa12Txs())
+	// cmd.AddCommand(CmdDeleteReceivedFa12Txs())
+
+	cmd.AddCommand(CmdCreateSendToTezos())
+	// cmd.AddCommand(CmdUpdateSendToTezos())
+	// cmd.AddCommand(CmdDeleteSendToTezos())
+
+	cmd.AddCommand(CmdCreateReceivedTxs())
+	// cmd.AddCommand(CmdUpdateReceivedTxs())
+	// cmd.AddCommand(CmdDeleteReceivedTxs())
+
 	return cmd
 }

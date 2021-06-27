@@ -26,5 +26,17 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 
 	// this line is used by starport scaffolding # 1
 
+	cmd.AddCommand(CmdListSendToTezosSigned())
+	cmd.AddCommand(CmdShowSendToTezosSigned())
+
+	cmd.AddCommand(CmdListReceivedFa12Txs())
+	cmd.AddCommand(CmdShowReceivedFa12Txs())
+
+	cmd.AddCommand(CmdListSendToTezos())
+	cmd.AddCommand(CmdShowSendToTezos())
+
+	cmd.AddCommand(CmdListReceivedTxs())
+	cmd.AddCommand(CmdShowReceivedTxs())
+
 	return cmd
 }
