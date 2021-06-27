@@ -1,5 +1,9 @@
 # bifrost
 
+<p align="center">
+    <img src="./bifrost_pegzone.jpg" />
+ </p>
+
 **bifrost** is a blockchain built using Cosmos SDK and Tendermint and created with [Starport](https://github.com/tendermint/starport).
 
 ## Get started
@@ -27,6 +31,13 @@ cd vue
 npm install
 npm run serve
 ```
+
+
+
+
+
+
+# Starport
 
 The frontend app is built using the `@starport/vue` and `@starport/vuex` packages. For details, see the [monorepo for Starport front-end development](https://github.com/tendermint/vue).
 
