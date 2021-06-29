@@ -80,7 +80,7 @@ Use "bifrostd query bifrost [command] --help" for more information about a comma
 List Transaction commands available in bifrost module
 
 ```
-$ bifrostd tx bifros
+$ bifrostd tx bifrost
 
 bifrost transactions subcommands
 
